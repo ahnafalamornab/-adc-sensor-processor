@@ -1,0 +1,11 @@
+--- ADC Sensor Analysis Report ---
+
+Total records: 4000
+
+Channel 0: 1000 samples, 0 faults
+Channel 1: 1000 samples, 6 faults
+Channel 2: 1000 samples, 7 faults
+Channel 3: 1000 samples, 7 faults
+
+Sequence gap: missing between 798 and 801
+Sequence gap: missing between 2497 and 2500
