@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
     analyse_channels(samples, count);
     detect_faults(samples, count);
     check_sequence(samples, count);
+    check_temperature(samples, count);
 
     export_results("results.txt", samples, count);
 

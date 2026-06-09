@@ -75,3 +75,23 @@ void analyse_channels(ADCSample *samples, int count) {
         printf("  Faults  : %d\n", cs.fault_count);
     }
 }
+
+void check_temperature(ADCSample *samples, int count) {
+    printf("\n--- Temperature Check ---\n");
+    int anomalies = 0;
+    for (int i = 0; i < count; i++) {
+        double temp = samples[i].temperature / 10.0;
+        if (temp > 50.0 || temp < 10.0) {
+            anomalies++;
+            printf("Temp anomaly: seq %d ch %d temp %.1f C\n",
+                   samples[i].sequence_number,
+                   samples[i].channel_id,
+                   temp);
+        }
+    }
+    if (anomalies == 0) {
+        printf("No temperature anomalies found\n");
+    } else {
+        printf("Total anomalies: %d\n", anomalies);
+    }
+}

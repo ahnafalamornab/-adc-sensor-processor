@@ -30,6 +30,7 @@ void convert_voltages(ADCSample *samples, int count);
 void detect_faults(ADCSample *samples, int count);
 void check_sequence(ADCSample *samples, int count);
 void analyse_channels(ADCSample *samples, int count);
+void check_temperature(ADCSample *samples, int count);
 ChannelStats get_channel_stats(ADCSample *samples, int count, int channel);
 
 #endif
