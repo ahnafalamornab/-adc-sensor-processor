@@ -102,7 +102,23 @@ void export_results(const char *filename, ADCSample *samples, int count) {
         fprintf(file, "  Std deviation : %.4f V\n", stddev);
         fprintf(file, "  Fault count   : %d\n", fault_count);
     }
-
+    fprintf(file, "\n--- Temperature Anomalies ---\n");
+    int temp_anomalies = 0;
+    for (int i = 0; i < count; i++) {
+        double temp = samples[i].temperature / 10.0;
+        if (temp > 50.0 || temp < 10.0) {
+            temp_anomalies++;
+            fprintf(file, "Anomaly: seq %d ch %d temp %.1f C\n",
+                    samples[i].sequence_number,
+                    samples[i].channel_id,
+                    temp);
+        }
+    }
+    if (temp_anomalies == 0) {
+        fprintf(file, "No temperature anomalies\n");
+    } else {
+        fprintf(file, "Total anomalies: %d\n", temp_anomalies);
+    }
     fprintf(file, "\n--- Sequence Integrity ---\n");
     int gaps = 0;
     for (int i = 1; i < count; i++) {

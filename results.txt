@@ -36,6 +36,33 @@ Channel 3:
   Std deviation : 0.6364 V
   Fault count   : 7
 
+--- Temperature Anomalies ---
+Anomaly: seq 1202 ch 0 temp 70.0 C
+Anomaly: seq 1203 ch 1 temp 67.6 C
+Anomaly: seq 1204 ch 2 temp 65.9 C
+Anomaly: seq 1205 ch 3 temp 63.4 C
+Anomaly: seq 1206 ch 0 temp 69.3 C
+Anomaly: seq 1207 ch 1 temp 73.9 C
+Anomaly: seq 1208 ch 2 temp 62.8 C
+Anomaly: seq 1209 ch 3 temp 65.0 C
+Anomaly: seq 1210 ch 0 temp 65.6 C
+Anomaly: seq 1211 ch 1 temp 61.1 C
+Anomaly: seq 1212 ch 2 temp 73.5 C
+Anomaly: seq 1213 ch 3 temp 67.5 C
+Anomaly: seq 1214 ch 0 temp 66.4 C
+Anomaly: seq 1215 ch 1 temp 71.9 C
+Anomaly: seq 1216 ch 2 temp 61.4 C
+Anomaly: seq 1217 ch 3 temp 70.8 C
+Anomaly: seq 2804 ch 0 temp 67.8 C
+Anomaly: seq 2805 ch 1 temp 73.1 C
+Anomaly: seq 2806 ch 2 temp 63.3 C
+Anomaly: seq 2807 ch 3 temp 67.4 C
+Anomaly: seq 2808 ch 0 temp 71.1 C
+Anomaly: seq 2809 ch 1 temp 65.5 C
+Anomaly: seq 2810 ch 2 temp 62.5 C
+Anomaly: seq 2811 ch 3 temp 67.8 C
+Total anomalies: 24
+
 --- Sequence Integrity ---
 Gap: missing between seq 798 and 801
 Gap: missing between seq 2497 and 2500
