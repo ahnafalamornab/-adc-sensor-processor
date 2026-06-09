@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* converts raw ADC values to voltage using formula voltage = (raw / 4095.0) * 3.3 */
 void convert_voltages(ADCSample *samples, int count) {
     for (int i = 0; i < count; i++) {
         double v = (samples[i].raw_value / 4095.0) * 3.3;
@@ -10,6 +11,7 @@ void convert_voltages(ADCSample *samples, int count) {
     }
 }
 
+/* calculates mean min max stddev and fault count for one channel */
 ChannelStats get_channel_stats(ADCSample *samples, int count, int channel) {
     ChannelStats cs;
     cs.channel = channel;
@@ -36,6 +38,7 @@ ChannelStats get_channel_stats(ADCSample *samples, int count, int channel) {
     return cs;
 }
 
+/* checks each sample for overvoltage undervoltage and sensor flag faults */
 void detect_faults(ADCSample *samples, int count) {
     printf("\n--- Fault Detection ---\n");
     for (int ch = 0; ch < 4; ch++) {
@@ -44,6 +47,7 @@ void detect_faults(ADCSample *samples, int count) {
     }
 }
 
+/* verifies sequence numbers increment by 1 and reports any gaps */
 void check_sequence(ADCSample *samples, int count) {
     int gaps = 0;
     printf("\n--- Sequence Integrity Check ---\n");
@@ -62,6 +66,7 @@ void check_sequence(ADCSample *samples, int count) {
     }
 }
 
+/* prints per channel statistics to the console */
 void analyse_channels(ADCSample *samples, int count) {
     printf("\n--- Per Channel Statistics ---\n");
     for (int ch = 0; ch < 4; ch++) {
@@ -76,6 +81,7 @@ void analyse_channels(ADCSample *samples, int count) {
     }
 }
 
+/* detects temperature readings above 50C or below 10C */
 void check_temperature(ADCSample *samples, int count) {
     printf("\n--- Temperature Check ---\n");
     int anomalies = 0;
