@@ -25,7 +25,7 @@ from a 4-channel 12-bit ADC sensor running at 1000 Hz.
 - stats.c/h    mean, min, max, standard deviation calculations
 
 ## How to build
-Requires CMake 3.20 and a C99 compiler.
+Requires CMake 4.2 and a C99 compiler.
 
 mkdir build
 cd build
