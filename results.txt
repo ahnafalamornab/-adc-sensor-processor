@@ -1,11 +1,42 @@
---- ADC Sensor Analysis Report ---
+=== ADC Sensor Analysis Report ===
 
-Total records: 4000
+Total records loaded: 4000
 
-Channel 0: 1000 samples, 0 faults
-Channel 1: 1000 samples, 6 faults
-Channel 2: 1000 samples, 7 faults
-Channel 3: 1000 samples, 7 faults
+--- Per Channel Statistics ---
 
-Sequence gap: missing between 798 and 801
-Sequence gap: missing between 2497 and 2500
+Channel 0:
+  Samples       : 1000
+  Mean voltage  : 1.6496 V
+  Min voltage   : 0.4384 V
+  Max voltage   : 2.8584 V
+  Std deviation : 0.8484 V
+  Fault count   : 0
+
+Channel 1:
+  Samples       : 1000
+  Mean voltage  : 1.5059 V
+  Min voltage   : 0.4892 V
+  Max voltage   : 3.1985 V
+  Std deviation : 0.7168 V
+  Fault count   : 6
+
+Channel 2:
+  Samples       : 1000
+  Mean voltage  : 1.7861 V
+  Min voltage   : 0.1048 V
+  Max voltage   : 2.9075 V
+  Std deviation : 0.7888 V
+  Fault count   : 7
+
+Channel 3:
+  Samples       : 1000
+  Mean voltage  : 1.3997 V
+  Min voltage   : 0.4851 V
+  Max voltage   : 2.3128 V
+  Std deviation : 0.6364 V
+  Fault count   : 7
+
+--- Sequence Integrity ---
+Gap: missing between seq 798 and 801
+Gap: missing between seq 2497 and 2500
+Total gaps: 2

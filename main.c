@@ -17,8 +17,10 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    printf("File loaded successfully\n");
+    printf("\nFile loaded successfully\n");
     printf("Total records: %d\n", count);
+
+    convert_voltages(samples, count);
 
     analyse_channels(samples, count);
     detect_faults(samples, count);
@@ -27,5 +29,6 @@ int main(int argc, char *argv[]) {
     export_results("results.txt", samples, count);
 
     free(samples);
+    printf("\nDone.\n");
     return 0;
 }
