@@ -58,7 +58,11 @@ void export_results(const char *filename, ADCSample *samples, int count) {
     }
 
     fprintf(file, "=== ADC Sensor Analysis Report ===\n\n");
-    fprintf(file, "Total records loaded: %d\n\n", count);
+    fprintf(file, "Total records loaded : %d\n", count);
+    fprintf(file, "Channels analysed    : 4\n");
+    fprintf(file, "Sample rate          : 1000 Hz\n");
+    fprintf(file, "Voltage reference    : 3.3 V\n");
+    fprintf(file, "ADC resolution       : 12-bit (0 to 4095)\n\n");
 
     fprintf(file, "--- Per Channel Statistics ---\n");
     int ch;
