@@ -46,7 +46,7 @@ ADCSample *load_binary(const char *filename, int *count) {
 
     fread(samples, sizeof(ADCSample), record_count, file);
     fclose(file);
-    *count = record_count;
+    *count = (int)record_count;
     return samples;
 }
 
@@ -61,30 +61,34 @@ void export_results(const char *filename, ADCSample *samples, int count) {
     fprintf(file, "Total records loaded: %d\n\n", count);
 
     fprintf(file, "--- Per Channel Statistics ---\n");
-    for (int ch = 0; ch < 4; ch++) {
+    int ch;
+    for (ch = 0; ch < 4; ch++) {
         int ch_count = 0;
-        int fault_count = 0;
+        int overvoltage = 0;
+        int undervoltage = 0;
+        int sensor_fault = 0;
         double sum = 0.0;
         double min_v = 9999.0;
         double max_v = -9999.0;
+        int i;
 
-        for (int i = 0; i < count; i++) {
+        for (i = 0; i < count; i++) {
             if (samples[i].channel_id == ch) {
                 double v = (samples[i].raw_value / 4095.0) * 3.3;
                 sum += v;
                 if (v < min_v) min_v = v;
                 if (v > max_v) max_v = v;
                 ch_count++;
-                if (v > 3.0) fault_count++;
-                if (v < 0.3) fault_count++;
-                if (samples[i].status_flags & 0x01) fault_count++;
+                if (v > 3.0) overvoltage++;
+                if (v < 0.3) undervoltage++;
+                if (samples[i].status_flags & 0x01) sensor_fault++;
             }
         }
 
         double mean = sum / ch_count;
         double sq_sum = 0.0;
 
-        for (int i = 0; i < count; i++) {
+        for (i = 0; i < count; i++) {
             if (samples[i].channel_id == ch) {
                 double v = (samples[i].raw_value / 4095.0) * 3.3;
                 double diff = v - mean;
@@ -100,11 +104,32 @@ void export_results(const char *filename, ADCSample *samples, int count) {
         fprintf(file, "  Min voltage   : %.4f V\n", min_v);
         fprintf(file, "  Max voltage   : %.4f V\n", max_v);
         fprintf(file, "  Std deviation : %.4f V\n", stddev);
-        fprintf(file, "  Fault count   : %d\n", fault_count);
+        fprintf(file, "  Overvoltage   : %d\n", overvoltage);
+        fprintf(file, "  Undervoltage  : %d\n", undervoltage);
+        fprintf(file, "  Sensor fault  : %d\n", sensor_fault);
+        fprintf(file, "  Total faults  : %d\n", overvoltage + undervoltage + sensor_fault);
     }
+
+    fprintf(file, "\n--- Sequence Integrity ---\n");
+    int gaps = 0;
+    int i;
+    for (i = 1; i < count; i++) {
+        if (samples[i].sequence_number != samples[i-1].sequence_number + 1) {
+            gaps++;
+            fprintf(file, "Gap: missing between seq %d and %d\n",
+                    samples[i-1].sequence_number,
+                    samples[i].sequence_number);
+        }
+    }
+    if (gaps == 0) {
+        fprintf(file, "No sequence gaps detected\n");
+    } else {
+        fprintf(file, "Total gaps: %d\n", gaps);
+    }
+
     fprintf(file, "\n--- Temperature Anomalies ---\n");
     int temp_anomalies = 0;
-    for (int i = 0; i < count; i++) {
+    for (i = 0; i < count; i++) {
         double temp = samples[i].temperature / 10.0;
         if (temp > 50.0 || temp < 10.0) {
             temp_anomalies++;
@@ -118,21 +143,6 @@ void export_results(const char *filename, ADCSample *samples, int count) {
         fprintf(file, "No temperature anomalies\n");
     } else {
         fprintf(file, "Total anomalies: %d\n", temp_anomalies);
-    }
-    fprintf(file, "\n--- Sequence Integrity ---\n");
-    int gaps = 0;
-    for (int i = 1; i < count; i++) {
-        if (samples[i].sequence_number != samples[i-1].sequence_number + 1) {
-            gaps++;
-            fprintf(file, "Gap: missing between seq %d and %d\n",
-                    samples[i-1].sequence_number,
-                    samples[i].sequence_number);
-        }
-    }
-    if (gaps == 0) {
-        fprintf(file, "No sequence gaps detected\n");
-    } else {
-        fprintf(file, "Total gaps: %d\n", gaps);
     }
 
     fclose(file);
